@@ -23,14 +23,15 @@
 
 标题：
 
-    <input type="text" name="newstitle">
+    <input type="text" name="title" id="title">
 
-富文本：
+
+<br>富文本：
         <div id="editor">
 
         </div>
 
-        <button type="button"  style="margin: 20px 60px" id="addNewBtn">新增</button>
+        <button type="button"  style="margin: 20px 60px" id="addNewBtn">发布新闻</button>
 
 
 
@@ -59,13 +60,15 @@
 </script>
 <script>
 
-    var context = editor.txt.html()
-
     $('#addNewBtn').click(function () {
+
+        var context = editor.txt.html()
+
         $.ajax({
             url:"${ctx}/AddNewsServlet",
             type:"post",
             data:{
+                title:$('input[name=title]').val(),
                 context:context,
             },
             dataType:"json",
@@ -74,6 +77,9 @@
 
                 if (result.status === 0){
                     alert('发布成功')
+
+                    $('#title').val('')
+                    editor.txt.clear();
 
                 } else{
                     alert('发布失败')

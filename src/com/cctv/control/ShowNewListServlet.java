@@ -10,11 +10,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static java.lang.System.out;
 
-@WebServlet("/AddNewsServlet")
-public class AddNewsServlet extends HttpServlet {
+@WebServlet("/ShowNewListServlet")
+public class ShowNewListServlet extends HttpServlet {
 
     private NewsService newsService;
 
@@ -27,23 +30,22 @@ public class AddNewsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
-        String title = request.getParameter("title");
-        String context = request.getParameter("context");
-        out.println(title);
-        out.println(context);
+        List<News> news = newsService.getNewsList();
 
-        News n=new News(title,context);
-
-        boolean news = newsService.addNews(n);
+        out.println(news);
 
         JSONObject jsonObject = null;
 
-        if(news == true){
-            jsonObject = new JSONObject("{status:0}");
+        Map<String,Object> map=new HashMap<>();
+        map.put("data",news);
+        map.put("status","0");
+        map.put("message","success");
+
+        if(news != null){
+            jsonObject = new JSONObject(map);
         }else{
             jsonObject = new JSONObject("{status:1}");
         }
-
         response.getOutputStream().write(jsonObject.toString().getBytes("utf-8"));
 
 

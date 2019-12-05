@@ -15,7 +15,7 @@ import java.sql.Statement;
  */
 public final class Untils {
 
-    private static String url = "jdbc:mysql://localhost:3306/cctv";
+    private static String url = "jdbc:mysql://localhost:3306/cctv?characterEncoding=utf8";
 
     private static String user = "root";
 
