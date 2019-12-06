@@ -30,6 +30,16 @@
     <url-pattern>/push</url-pattern>
 </servlet-mapping>
 
+<servlet>
+    <servlet-name>details</servlet-name>
+    <jsp-file>/WEB-INF/view/details.jsp</jsp-file>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>details</servlet-name>
+    <url-pattern>/details</url-pattern>
+</servlet-mapping>
+
 
 
 

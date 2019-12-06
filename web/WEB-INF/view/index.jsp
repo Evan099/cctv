@@ -10,7 +10,7 @@
     <p>cctv首页</p>
 
     <ul id="newsboard">
-        <li><a href="##">新闻(假数据)</a></li>
+        <li><a href="##" onclick="gotoDetails(6)">新闻(假数据)</a></li>
     </ul>
 
 
@@ -21,16 +21,12 @@
 <div>
     <a href="login">去登录</a>
 
-    <button type="button" class="serch">查询</button>
 
 </div>
 </body>
 </html>
 <script>
-
     (function(){
-
-
         $.ajax({
             url:"${ctx}/ShowNewListServlet",
             type:"post",
@@ -48,9 +44,11 @@
 
                         var rs = result.data[i]
                         var title = rs.title
+                        var nid = rs.nid
                         console.log(rs)
                         console.log(title)
-                        $('#newsboard').append("<li><a href='##'>"+title+"</a></li>")
+                        console.log(nid)
+                        $('#newsboard').append("<li><a href='##' onclick='gotoDetails("+nid+")'>"+title+"</a></li>")
 
                     }
 
@@ -63,4 +61,14 @@
 
 
     })()
+
+
+    // 进入详情页
+    function gotoDetails(nid){
+        var nid = nid
+
+        window.open("${ctx}/details?nid="+nid,'_blank')
+
+        
+    }
 </script>

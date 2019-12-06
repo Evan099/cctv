@@ -2,7 +2,7 @@ package dao;
 
 import com.cctv.bean.News;
 import com.cctv.common.Untils;
-import sun.reflect.misc.ConstructorUtil;
+
 
 import java.sql.PreparedStatement;
 
@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class NewDao {
@@ -61,6 +62,34 @@ public class NewDao {
         }
         return news;
 
+    }
+
+//      查询单条新闻
+    public List<News> getNewDetail(int nid){
+        Connection conn = Untils.getConnection();
+        String sql = "select * from news where nid = ?";
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        News news = null;
+        List<News> newDetail = new ArrayList<>();
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, nid);
+            rs = stmt.executeQuery();
+            while (rs.next()){
+                news = new News();
+                news.setTitle(rs.getString("title"));
+                news.setContext(rs.getString("context"));
+            }
+            newDetail.add(news);
+        }catch (SQLException e){
+            System.out.println("查询用户信息失败。");
+            e.printStackTrace();
+        }finally {
+            Untils.release(rs,stmt,conn);
+        }
+
+        return newDetail;
     }
 
 

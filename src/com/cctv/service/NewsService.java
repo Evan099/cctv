@@ -17,14 +17,19 @@ public class NewsService {
     }
 
 
-//    增加新闻
+//      增加单条新闻
 
     public boolean addNews(News news){
         return newDao.saveNews(news);
     }
-//    查看新闻列表
+//      查看所有新闻
     public List<News> getNewsList(){
         return newDao.getNewsList();
+    }
+
+//      查询单条新闻
+    public List<News> getNewsDetails(int nid){
+        return newDao.getNewDetail(nid);
     }
 
 
