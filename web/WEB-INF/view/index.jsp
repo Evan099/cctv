@@ -19,7 +19,7 @@
 
 
 <div>
-    <a href="login">去登录</a>
+    <a href="login" target="_blank">去登录</a>
 
 
 </div>

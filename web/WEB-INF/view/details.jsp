@@ -10,9 +10,9 @@
 <body>
 <p>cctv新闻详情页</p>
 
-<p>新闻标题</p>
+<p class="title"  style="font-size: 18px;text-align: center;font-weight: 600">新闻标题</p>
 
-<div>新闻内容</div>
+<div class="context">新闻内容</div>
 
 
 
@@ -39,7 +39,15 @@
             dataType:"json",
             success:function (result) {
                 if(result.status === "0"){
-                        alert('查询成功')
+
+                    var title = result.data[0].title
+                    var context = result.data[0].context
+
+                    $('.title').html(title)
+                    $('.context').html(context)
+
+
+
                 }else{
                         alert('查询失败')
                 }

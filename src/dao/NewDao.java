@@ -3,7 +3,6 @@ package dao;
 import com.cctv.bean.News;
 import com.cctv.common.Untils;
 
-
 import java.sql.PreparedStatement;
 
 import java.sql.Connection;
@@ -40,7 +39,7 @@ public class NewDao {
 //      查询所有新闻
     public List<News> getNewsList(){
         Connection conn = Untils.getConnection();
-        String sql = "select * from news LIMIT 10";
+        String sql = "select * from news";
         PreparedStatement stmt = null;
         ResultSet rs = null;
         List<News> news = new ArrayList<>();

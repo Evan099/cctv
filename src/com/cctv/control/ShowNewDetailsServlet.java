@@ -46,6 +46,9 @@ public class ShowNewDetailsServlet extends HttpServlet {
         Map<String,Object> map = new HashMap<>();
 
             if(news != null){
+
+                response.setContentType("text/html;charset=utf-8");
+
                 map.put("data",news);
                 map.put("status","0");
                 map.put("message","success");

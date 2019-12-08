@@ -39,10 +39,10 @@
             success:function (result) {
                 var result = result
 
-                if (result.status === 0){
+                if(result.status === 0){
                     alert('登录成功')
                     window.location.href = '${ctx}/push';
-                } else{
+                }else if(result.status === 1){
                     alert('登录失败')
                 }
 
