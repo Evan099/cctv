@@ -16,10 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Array;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @WebServlet("/SaveImgServlet")
 public class SaveImgServlet extends HttpServlet {
@@ -39,7 +36,6 @@ public class SaveImgServlet extends HttpServlet {
         catch (FileUploadException e) {
             e.printStackTrace();
         }
-
         // 对所有请求信息进行判断
         Iterator iter = items.iterator();
         while (iter.hasNext()) {
@@ -52,7 +48,16 @@ public class SaveImgServlet extends HttpServlet {
             }
             // 信息为文件格式
             else {
-                String fileName = item.getName();
+
+                //修改图片的名字(使用UUID--生成唯一的ID值)//evanlee添加
+
+                UUID uuid = UUID.randomUUID();
+
+                String fileName = item.getName();//获取图片名称
+
+                fileName = fileName.substring(0, fileName.lastIndexOf("."))+uuid+".png";//获取文件除后缀外的名称+uuid+定义的文件格式
+
+
                 System.out.println(fileName);
                 int index = fileName.lastIndexOf("\\");
                 fileName = fileName.substring(index + 1);
@@ -60,16 +65,17 @@ public class SaveImgServlet extends HttpServlet {
 
 
 //                String basePath = request.getRealPath("/images");
-                String basePath = "C:\\Users\\lipanchen\\Desktop\\imgbox\\";
+                String basePath = "F:\\imgFile"; //设置存放文件的本地路径
                 File file = new File(basePath, fileName);
                 try {
                     item.write(file);
-                    //12.9(返回到前端发布页面的wangEditor)
+
+                    //12.9(设置前端发布页面push.jsp的wangEditor所需要的指定返回信息)
                     Map<String,Object> map=new HashMap<>();
                     map.put("errno","0");
 
                     String[] data=new String[1];
-                    data[0]="\\Users\\lipanchen\\Desktop\\imgbox\\"+fileName;
+                    data[0]="\\imgFile\\"+fileName;   //设置返回的文件的本地路径
 
                     map.put("data",data);
 
