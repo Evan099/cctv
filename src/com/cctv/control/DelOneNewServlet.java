@@ -1,6 +1,5 @@
 package com.cctv.control;
 
-import com.cctv.bean.News;
 import com.cctv.service.NewsService;
 import org.json.JSONObject;
 
@@ -13,8 +12,9 @@ import java.io.IOException;
 
 import static java.lang.System.out;
 
-@WebServlet("/AddNewsServlet")
-public class AddNewsServlet extends HttpServlet {
+@WebServlet("/DelOneNewServlet")
+public class DelOneNewServlet extends HttpServlet {
+
 
     private NewsService newsService;
 
@@ -24,37 +24,32 @@ public class AddNewsServlet extends HttpServlet {
         newsService = new NewsService();
     }
 
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
-        String title = request.getParameter("title");
-        String context = request.getParameter("context");
-//        out.println(title);
-//        out.println(context);
+        String id = request.getParameter("nid");
+        int nid = Integer.parseInt(id);
+        out.println(nid);
 
-        News n=new News(title,context);
-
-        boolean news = newsService.addNews(n);
-
+        int isDel = newsService.delOneNew(nid);
         JSONObject jsonObject = null;
+//        out.println("删除结果："+isDel);
+        if(isDel == 1){
+            response.setContentType("text/html;charset=utf-8");
 
-        if(news == true){
-            jsonObject = new JSONObject("{status:0}");
+            jsonObject = new JSONObject("{status:'0'}");
         }else{
-            jsonObject = new JSONObject("{status:1}");
+            jsonObject = new JSONObject("{status:'1'}");
         }
-
         response.getOutputStream().write(jsonObject.toString().getBytes("utf-8"));
 
-
     }
-
 
     @Override
     public void destroy() {
         super.destroy();
     }
-
 
 
 }

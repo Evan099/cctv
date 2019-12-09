@@ -12,7 +12,7 @@
     <title>push</title>
 </head>
 <style>
-#editor{width: 100%;height: 400px;}
+#editor{width: 100%;height: auto;}
 </style>
 <body>
 <p>发布新闻页</p>
@@ -31,7 +31,7 @@
 
         </div>
 
-        <button type="button"  style="margin: 20px 60px" id="addNewBtn">发布新闻</button>
+        <button type="button"  style="margin: 20px 60px" onclick="addNewBtn()">发布新闻</button>
 
 
 
@@ -49,6 +49,11 @@
     // 富文本
     var E = window.wangEditor
     var editor = new E('#editor')
+    // 配置服务器端地址
+    // editor.customConfig.uploadImgShowBase64 = true   // 使用 base64 保存图片
+    editor.customConfig.uploadImgServer = '${ctx}/SaveImgServlet'  // 上传图片到服务器
+
+
     editor.create()
 </script>
 <script>
@@ -60,8 +65,7 @@
 </script>
 <script>
 
-    $('#addNewBtn').click(function () {
-
+    function addNewBtn() {
         var context = editor.txt.html()
 
         $.ajax({
@@ -88,6 +92,10 @@
             }
 
         })
-    })
+    }
+
+
+
+
 
 </script>

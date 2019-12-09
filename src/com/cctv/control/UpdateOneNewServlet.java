@@ -13,8 +13,8 @@ import java.io.IOException;
 
 import static java.lang.System.out;
 
-@WebServlet("/AddNewsServlet")
-public class AddNewsServlet extends HttpServlet {
+@WebServlet("/UpdateOneNewServlet")
+public class UpdateOneNewServlet extends HttpServlet {
 
     private NewsService newsService;
 
@@ -24,37 +24,39 @@ public class AddNewsServlet extends HttpServlet {
         newsService = new NewsService();
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+        String id = request.getParameter("nid");
+
+        int nid = Integer.parseInt(id);
         String title = request.getParameter("title");
         String context = request.getParameter("context");
-//        out.println(title);
-//        out.println(context);
 
-        News n=new News(title,context);
+        News news = new News(nid,title,context);
 
-        boolean news = newsService.addNews(n);
+        boolean isChange = newsService.changeOneNew(news);
 
         JSONObject jsonObject = null;
+//        out.println("修改结果"+isChange);
 
-        if(news == true){
-            jsonObject = new JSONObject("{status:0}");
+        if(isChange == true){
+            response.setContentType("text/html;charset=utf-8");
+
+            jsonObject = new JSONObject("{status:'0'}");
         }else{
-            jsonObject = new JSONObject("{status:1}");
+            jsonObject = new JSONObject("{status:'1'}");
         }
-
         response.getOutputStream().write(jsonObject.toString().getBytes("utf-8"));
 
 
     }
 
-
     @Override
     public void destroy() {
         super.destroy();
     }
-
 
 
 }

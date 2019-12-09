@@ -32,6 +32,15 @@ public class NewsService {
         return newDao.getNewDetail(nid);
     }
 
+//      删除一条新闻
+    public int delOneNew(int nid){
+        return newDao.delOneNew(nid);
+    }
+//      修改一条新闻
+    public boolean changeOneNew(News news){
+        return newDao.changeOneNew(news);
+    }
+
 
 
 }

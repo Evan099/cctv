@@ -38,7 +38,7 @@ public class ShowNewDetailsServlet extends HttpServlet {
             int nid = Integer.parseInt(id);
             List<News> news = newsService.getNewsDetails(nid);
 
-            out.println(news);
+//            out.println(news);
 
 
         JSONObject jsonObject = null;

@@ -32,7 +32,7 @@ public class ShowNewListServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         List<News> news = newsService.getNewsList();
 
-        out.println(news);
+//        out.println(news);
 
         JSONObject jsonObject = null;
 

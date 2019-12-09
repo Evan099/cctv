@@ -41,6 +41,17 @@
 </servlet-mapping>
 
 
+<servlet>
+    <servlet-name>change</servlet-name>
+    <jsp-file>/WEB-INF/view/change.jsp</jsp-file>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>change</servlet-name>
+    <url-pattern>/change</url-pattern>
+</servlet-mapping>
+
+
 
 
 

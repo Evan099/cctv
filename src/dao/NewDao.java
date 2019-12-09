@@ -91,6 +91,61 @@ public class NewDao {
         return newDetail;
     }
 
+//      删除一条新闻
+    public int delOneNew(int nid){
+        Connection conn = Untils.getConnection();
+        String sql = "delete from news where nid = ?";
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        int isDelResult = 0;
+
+        try{
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1,nid);
+            isDelResult = stmt.executeUpdate();
+
+        }catch (SQLException e){
+            System.out.println("删除信息失败。");
+            e.printStackTrace();
+        }finally {
+            Untils.release(rs,stmt,conn);
+        }
+
+        return isDelResult;
+
+    }
+
+//      修改一条新闻
+    public boolean changeOneNew(News news){
+        Connection conn = Untils.getConnection();
+        String sql = "update news set title = ?, context = ? where nid = ?";
+        PreparedStatement stmt = null;
+
+        try{
+            stmt = conn.prepareStatement(sql);
+
+
+            stmt.setString(1, news.getTitle());
+            stmt.setString(2,news.getContext());
+            stmt.setInt(3, news.getNid());
+            stmt.execute();
+
+            return true;
+
+        }catch (SQLException e){
+            System.out.println("修改信息失败");
+            e.printStackTrace();
+            return false;
+        }finally {
+            Untils.release(null,stmt,conn);
+        }
+
+
+
+    }
+
+
+
 
 
 

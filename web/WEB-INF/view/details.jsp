@@ -24,7 +24,14 @@
 </body>
 </html>
 <script>
+    // 自执行函数
     $(function () {
+        createDetailsPage()
+    });
+
+
+    // 查询详情数据
+    function createDetailsPage() {
         var search = location.search;
         var nid = search.split("=")[1]; //获取？后面的值
         // alert(nid);
@@ -49,15 +56,12 @@
 
 
                 }else{
-                        alert('查询失败')
+                    alert('查询失败')
                 }
             }
 
         })
-
-
-
-    });
+    }
 
 
 
