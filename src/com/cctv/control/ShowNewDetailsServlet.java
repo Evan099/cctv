@@ -14,8 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.lang.System.out;
-import static java.lang.System.setOut;
 
 @WebServlet("/ShowNewDetailsServlet")
 public class ShowNewDetailsServlet extends HttpServlet {

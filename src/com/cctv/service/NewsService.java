@@ -41,6 +41,11 @@ public class NewsService {
         return newDao.changeOneNew(news);
     }
 
+//      分页新闻查询
+    public List<News> getNewsPage(News news){
+        return newDao.getNewsPage(news);
+    }
+
 
 
 }

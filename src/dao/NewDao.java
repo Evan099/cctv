@@ -145,6 +145,41 @@ public class NewDao {
     }
 
 
+    //      查询所有新闻(分页)
+    public List<News> getNewsPage(News news){
+        Connection conn = Untils.getConnection();
+
+        String sql = "select * from news limit ?,?";
+//        String totalSql = "select count(*) from news";
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        List<News> newslist = new ArrayList<>();
+        try{
+
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1,news.getPageNum());
+            stmt.setInt(2,news.getPageSize());
+            rs = stmt.executeQuery();
+            while (rs.next()){
+                newslist.add(new News(rs.getInt("nid"),
+                        rs.getString("title"),
+                        rs.getString("context")
+
+                ));
+            }
+
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            Untils.release(rs,stmt,conn);
+        }
+        return newslist;
+
+    }
+
+
 
 
 

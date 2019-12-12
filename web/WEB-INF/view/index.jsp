@@ -3,7 +3,9 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="${ctx}/asset/layui/css/layui.css">
     <script src="${ctx}/asset/js/jquery-3.3.1.js"></script>
+    <script src="${ctx}/asset/layui/layui.js"></script>
     <title>index</title>
 </head>
 <style>
@@ -32,15 +34,17 @@
 
 
 
+<div id="test1"></div>
+
 
 
 <div>
     <a href="login" target="_blank">去登录</a>
-
-
 </div>
+
 </body>
 </html>
+
 <script>
     // 初始化页面自执行函数
    (function(){
@@ -124,3 +128,51 @@
         window.open("${ctx}/change?nid="+nid,'_blank')
     }
 </script>
+
+<script>
+    layui.use(['laypage','layer'], function(){
+        var laypage = layui.laypage
+            ,layer = layui.layer;
+
+        //执行一个laypage实例
+        laypage.render({
+            elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+            ,count: 10 //数据总数，从服务端得到
+            ,limit:2
+           ,first: '首页'
+           ,last: '尾页',
+            jump:function (obj) {
+
+                console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                console.log(obj.limit); //得到每页显示的条数
+
+                var pageNum = obj.curr
+                var pageSize = obj.limit
+
+                $.ajax({
+                    url:"${ctx}/NewsPageServlet",
+                    type:"post",
+                    data:{
+                        pageNum:pageNum,
+                        pageSize:pageSize
+                    },
+                    dataType:"json",
+                    success:function (result) {
+
+
+
+                    }
+
+
+                })
+
+
+            }
+        });
+
+
+
+    });
+</script>
+
+
