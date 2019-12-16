@@ -1,6 +1,7 @@
 package com.cctv.control;
 
 import com.cctv.bean.News;
+import com.cctv.bean.PageEntity;
 import com.cctv.service.NewsService;
 import org.json.JSONObject;
 
@@ -33,12 +34,13 @@ public class NewsPageServlet extends HttpServlet {
         int pageNum = Integer.valueOf(request.getParameter("pageNum"));
         int pageSize = Integer.valueOf(request.getParameter("pageSize"));
 
-        out.println(pageNum);
-        out.println(pageSize);
+        out.println("前端传给后端参数:pageNum:"+pageNum);
+        out.println("前端传给后端参数:pageSize:"+pageSize);
 
-        News news = new News(pageNum,pageSize);
+        PageEntity PageEntity = new PageEntity(pageNum,pageSize);
+//        News news = new News();
 
-        List<News> newsRs = newsService.getNewsPage(news);
+        PageEntity newsRs = newsService.getNewsPage(PageEntity);
 
 
                     out.println(newsRs);
@@ -49,8 +51,9 @@ public class NewsPageServlet extends HttpServlet {
             response.setContentType("text/html;charset=utf-8");
 
             Map<String,Object> m = new HashMap<>();
-            m.put("data",newsRs);
+            m.put("data",newsRs.getNewsList());
             m.put("status","0");
+            m.put("total",newsRs.getPageTotal());
             m.put("message","success");
 
             jsonObject = new JSONObject(m);

@@ -1,6 +1,7 @@
 package dao;
 
 import com.cctv.bean.News;
+import com.cctv.bean.PageEntity;
 import com.cctv.common.Untils;
 
 import java.sql.PreparedStatement;
@@ -9,7 +10,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class NewDao {
@@ -146,28 +146,48 @@ public class NewDao {
 
 
     //      查询所有新闻(分页)
-    public List<News> getNewsPage(News news){
-        Connection conn = Untils.getConnection();
 
+    public PageEntity getNewsPage(PageEntity pageEntityPra){
+        Connection conn = Untils.getConnection();
         String sql = "select * from news limit ?,?";
-//        String totalSql = "select count(*) from news";
         PreparedStatement stmt = null;
         ResultSet rs = null;
-
+        PageEntity pageEntity= new PageEntity(pageEntityPra.getPageNum(),pageEntityPra.getPageSize());
         List<News> newslist = new ArrayList<>();
         try{
 
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1,news.getPageNum());
-            stmt.setInt(2,news.getPageSize());
+            stmt.setInt(1,pageEntity.getPageNum());
+            stmt.setInt(2,pageEntity.getPageSize());
             rs = stmt.executeQuery();
             while (rs.next()){
-                newslist.add(new News(rs.getInt("nid"),
-                        rs.getString("title"),
-                        rs.getString("context")
-
-                ));
+                newslist.add(
+                        new News(
+                            rs.getInt("nid"),
+                            rs.getString("title"),
+                            rs.getString("context")
+                )
+                );
             }
+
+            String totalSql = "select count(*) as nid from news";//查总数
+            ResultSet rsPageTotal;//查总数
+            PreparedStatement stmts = null;//查总数
+            stmts = conn.prepareStatement(totalSql);
+
+            rsPageTotal =stmts.executeQuery();
+
+            int total=0;
+            while (rsPageTotal.next()){
+                total =rsPageTotal.getInt("nid");
+                System.out.println(total);
+            }
+
+            pageEntity.setPageTotal(total);
+            pageEntity.setNewsList(newslist);
+
+
+
 
 
         }catch (SQLException e){
@@ -175,7 +195,7 @@ public class NewDao {
         }finally {
             Untils.release(rs,stmt,conn);
         }
-        return newslist;
+        return pageEntity;
 
     }
 

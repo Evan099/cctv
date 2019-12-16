@@ -1,6 +1,7 @@
 package com.cctv.service;
 
 import com.cctv.bean.News;
+import com.cctv.bean.PageEntity;
 import dao.NewDao;
 
 import java.util.List;
@@ -42,8 +43,8 @@ public class NewsService {
     }
 
 //      分页新闻查询
-    public List<News> getNewsPage(News news){
-        return newDao.getNewsPage(news);
+    public PageEntity getNewsPage(PageEntity pageEntity){
+        return newDao.getNewsPage(pageEntity);
     }
 
 

@@ -34,7 +34,9 @@
 
 
 
-<div id="test1"></div>
+<div id="test1">
+
+</div>
 
 
 
@@ -46,49 +48,53 @@
 </html>
 
 <script>
+    window.onload=function () {
+
+
     // 初始化页面自执行函数
    (function(){
-       createPage()
+       initNewPage();
     })()
 
     // 初始化页面
-    function createPage() {
-        $('#newsboard').html("")//先清空这个div的内容，避免删除的时候重复追加
-        $.ajax({
-            url:"${ctx}/ShowNewListServlet",
-            type:"post",
-            data:{
+    <%--function createPage() {--%>
+        <%--$('#newsboard').html("")//先清空这个div的内容，避免删除的时候重复追加--%>
+        <%--$.ajax({--%>
+            <%--url:"${ctx}/NewsPageServlet",--%>
+            <%--type:"post",--%>
+            <%--data:{--%>
+                <%--pageNum:1,--%>
+                <%--pageSize:5--%>
+            <%--},--%>
+            <%--dataType:"json",--%>
+            <%--success:function (result) {--%>
+                <%--var result = result--%>
 
-            },
-            dataType:"json",
-            success:function (result) {
-                var result = result
+                <%--if (result.status == "0"){--%>
 
-                if (result.status == "0"){
+                    <%--for(i in result.data){--%>
 
-                    for(i in result.data){
+                        <%--var rs = result.data[i]--%>
+                        <%--var title = rs.title--%>
+                        <%--var nid = rs.nid--%>
+                        <%--console.log(rs)--%>
+                        <%--console.log(title)--%>
+                        <%--console.log(nid)--%>
+                        <%--$('#newsboard').append("<li>" +--%>
+                            <%--"<a href='##' onclick='gotoDetails("+nid+")'>"+title+"</a>  " +--%>
+                            <%--"<span class='del' onclick='delFun("+nid+")'>删除</span>" +--%>
+                            <%--" <span class='gotoChangePageBtn' onclick='gotoChangePage("+nid+")'>修改</span>"+--%>
+                            <%--"</li>")--%>
 
-                        var rs = result.data[i]
-                        var title = rs.title
-                        var nid = rs.nid
-                        console.log(rs)
-                        console.log(title)
-                        console.log(nid)
-                        $('#newsboard').append("<li>" +
-                            "<a href='##' onclick='gotoDetails("+nid+")'>"+title+"</a>  " +
-                            "<span class='del' onclick='delFun("+nid+")'>删除</span>" +
-                            " <span class='gotoChangePageBtn' onclick='gotoChangePage("+nid+")'>修改</span>"+
-                            "</li>")
+                    <%--}--%>
 
-                    }
+                <%--} else{--%>
+                    <%--alert('查询失败')--%>
+                <%--}--%>
 
-                } else{
-                    alert('查询失败')
-                }
-
-            }
-        })
-    }
+            <%--}--%>
+        <%--})--%>
+    // }
 
 
 
@@ -112,7 +118,7 @@
                 var result = result
                 if(result.status === '0'){
                     alert("删除成功")
-                    createPage()//重构页面
+                    initNewPage()//重构页面
                 }else{
                     alert("删除失败")
                 }
@@ -127,52 +133,88 @@
         var nid = nid
         window.open("${ctx}/change?nid="+nid,'_blank')
     }
-</script>
 
-<script>
-    layui.use(['laypage','layer'], function(){
-        var laypage = layui.laypage
-            ,layer = layui.layer;
+    // 带分页功能的数据初始化
+        var count = window.a
+    function initNewPage(count){
+        alert(count)
 
-        //执行一个laypage实例
-        laypage.render({
-            elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
-            ,count: 10 //数据总数，从服务端得到
-            ,limit:2
-           ,first: '首页'
-           ,last: '尾页',
-            jump:function (obj) {
+        layui.use(['laypage','layer'], function(){
+            var laypage = layui.laypage
 
-                console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-                console.log(obj.limit); //得到每页显示的条数
+            //执行一个laypage实例
+            laypage.render({
+                elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+                ,count:count  //数据总数，从服务端得到
+                ,limit:5  //每页显示条数
+                ,prev:"<"//上一页图标
+                ,next:">"//下一页图标
+                ,jump:function (obj,first) {
 
-                var pageNum = obj.curr
-                var pageSize = obj.limit
+                        var pageNum = obj.curr
+                        var pageSize = obj.limit
+                    this.count = 100
+                    ajaxGetData(pageNum,pageSize)
 
-                $.ajax({
-                    url:"${ctx}/NewsPageServlet",
-                    type:"post",
-                    data:{
-                        pageNum:pageNum,
-                        pageSize:pageSize
-                    },
-                    dataType:"json",
-                    success:function (result) {
+
+                }
+            });
 
 
 
-                    }
-
-
-                })
-
-
-            }
         });
 
+    }
 
 
-    });
+    // ajax查询数据
+        function ajaxGetData(pageNum,pageSize){
+            $.ajax({
+                url:"${ctx}/NewsPageServlet",
+                type:"post",
+                data:{
+                    pageNum:pageNum,
+                    pageSize:pageSize
+                },
+                dataType:"json",
+                success:function (result) {
+                    var result = result;
+                    var pageTotal = result.total;
+
+                    if (result.status === "0"){
+                        $('#newsboard').html("")//先清空这个div的内容，避免删除的时候重复追加
+                         count = result.total;
+
+                        window.a = count
+
+                        for(i in result.data){
+
+                            var rs = result.data[i]
+                            var title = rs.title
+                            var nid = rs.nid
+                            console.log(rs)
+                            console.log(title)
+                            console.log(nid)
+                            $('#newsboard').append("<li>" +
+                                "<a href='##' onclick='gotoDetails("+nid+")'>"+title+"</a>  " +
+                                "<span class='del' onclick='delFun("+nid+")'>删除</span>" +
+                                " <span class='gotoChangePageBtn' onclick='gotoChangePage("+nid+")'>修改</span>"+
+                                "</li>")
+
+                        }
+
+
+                    } else{
+                        alert('分页查询失败')
+                    }
+
+                }
+
+            })
+        }
+
+    }
 </script>
+
 
 

@@ -5,20 +5,15 @@ public class News {
     private String title;
     private String context;
 
-    //已知数据
-    private int pageNum;
-    private int pageSize;
-    private int pageTotal;
 
+
+
+//    构造函数
     public News() {
 
     }
 
-    public News(int pageNum,int pageSize) {
-        this.pageNum = pageNum;
-        this.pageSize = pageSize;
 
-    }
 
     public News(String context) {
         this.context = context;
@@ -39,6 +34,8 @@ public class News {
         this.title = title;
         this.context = context;
     }
+
+//    get and set
 
     public int getNid() {
         return nid;
@@ -65,50 +62,12 @@ public class News {
     }
 
 
-//    分页
-    public int getPageNum() {
-        return pageNum;
-    }
-
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public int getPageTotal() {
-        return pageTotal;
-    }
-
-    public void setPageTotal(int pageTotal) {
-        pageTotal = pageTotal;
-    }
-
-//    @Override
-//    public String toString() {
-//        return "News{" +
-//                "nid=" + nid +
-//                ", title='" + title + '\'' +
-//                ", context='" + context + '\'' +
-//                '}';
-//    }
-
-
     @Override
     public String toString() {
         return "News{" +
                 "nid=" + nid +
                 ", title='" + title + '\'' +
                 ", context='" + context + '\'' +
-                ", pageNum=" + pageNum +
-                ", pageSize=" + pageSize +
-                ", pageTotal=" + pageTotal +
                 '}';
     }
 }
