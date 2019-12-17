@@ -1,6 +1,5 @@
 package com.cctv.control;
 
-import com.cctv.bean.News;
 import com.cctv.bean.PageEntity;
 import com.cctv.service.NewsService;
 import org.json.JSONObject;
@@ -12,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import static java.lang.System.out;

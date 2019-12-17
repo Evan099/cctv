@@ -1,4 +1,4 @@
-package dao;
+package com.cctv.dao;
 
 import com.cctv.bean.User;
 import com.cctv.common.Untils;

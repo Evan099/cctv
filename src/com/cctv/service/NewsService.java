@@ -2,7 +2,7 @@ package com.cctv.service;
 
 import com.cctv.bean.News;
 import com.cctv.bean.PageEntity;
-import dao.NewDao;
+import com.cctv.dao.NewDao;
 
 import java.util.List;
 
@@ -19,7 +19,6 @@ public class NewsService {
 
 
 //      增加单条新闻
-
     public boolean addNews(News news){
         return newDao.saveNews(news);
     }

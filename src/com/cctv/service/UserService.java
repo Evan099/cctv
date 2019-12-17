@@ -1,7 +1,7 @@
 package com.cctv.service;
 
 import com.cctv.bean.User;
-import dao.UserDao;
+import com.cctv.dao.UserDao;
 
 public class UserService {
 

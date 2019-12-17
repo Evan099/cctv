@@ -1,4 +1,4 @@
-package dao;
+package com.cctv.dao;
 
 import com.cctv.bean.News;
 import com.cctv.bean.PageEntity;
@@ -149,7 +149,7 @@ public class NewDao {
 
     public PageEntity getNewsPage(PageEntity pageEntityPra){
         Connection conn = Untils.getConnection();
-        String sql = "select * from news limit ?,?";
+        String sql = "select * from news ORDER BY nid asc limit ?,?";
         PreparedStatement stmt = null;
         ResultSet rs = null;
         PageEntity pageEntity= new PageEntity(pageEntityPra.getPageNum(),pageEntityPra.getPageSize());
@@ -157,7 +157,7 @@ public class NewDao {
         try{
 
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1,pageEntity.getPageNum());
+            stmt.setInt(1,(pageEntity.getPageNum()-1)*5);
             stmt.setInt(2,pageEntity.getPageSize());
             rs = stmt.executeQuery();
             while (rs.next()){
