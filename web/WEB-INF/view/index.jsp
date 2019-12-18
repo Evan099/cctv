@@ -54,7 +54,7 @@
 
     // 初始化页面自执行函数
    (function(){
-       ajaxGetData(1,5)
+       ajaxGetData(0,20)
        initNewPage();
     })()
 
@@ -110,7 +110,7 @@
                 ,next:">"//下一页图标
                 ,jump:function (obj,first) {
 
-                        var pageNum = obj.curr
+                        var pageNum = (obj.curr-1)*5//因为layer分页是从1开始计算，而数据库查询是从0开始计算，所以要减1
                         var pageSize = obj.limit
 
                     ajaxGetData(pageNum,pageSize)
@@ -135,6 +135,7 @@
                     pageSize:pageSize
                 },
                 dataType:"json",
+                async:false,
                 success:function (result) {
 
                     var result = result;

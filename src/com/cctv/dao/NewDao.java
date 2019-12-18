@@ -161,7 +161,7 @@ public class NewDao {
         try{
 
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1,(pageEntity.getPageNum()-1)*5);
+            stmt.setInt(1,pageEntity.getPageNum());
             stmt.setInt(2,pageEntity.getPageSize());
             rs = stmt.executeQuery();
             while (rs.next()){
