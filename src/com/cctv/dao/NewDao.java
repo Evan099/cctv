@@ -17,12 +17,13 @@ public class NewDao {
 //    增加一条新闻
     public boolean saveNews(News news){
         Connection conn = Untils.getConnection();
-        String sql = "insert into news(title,context) values(?,?)";
+        String sql = "insert into news(title,context,coverbg) values(?,?,?)";
         PreparedStatement stmt = null;
         try {
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, news.getTitle());
             stmt.setString(2, news.getContext());
+            stmt.setString(3, news.getCoverbg());
             stmt.execute();
         } catch (Exception e) {
             System.out.println("保存留言信息失败。");
@@ -50,7 +51,8 @@ public class NewDao {
             while (rs.next()){
                 news.add(new News(rs.getInt("nid"),
                         rs.getString("title"),
-                        rs.getString("context")
+                        rs.getString("context"),
+                        rs.getString("coverbg")
                         ));
             }
 
@@ -79,6 +81,7 @@ public class NewDao {
                 news = new News();
                 news.setTitle(rs.getString("title"));
                 news.setContext(rs.getString("context"));
+                news.setCoverbg(rs.getString("coverbg"));
             }
             newDetail.add(news);
         }catch (SQLException e){
@@ -118,7 +121,7 @@ public class NewDao {
 //      修改一条新闻
     public boolean changeOneNew(News news){
         Connection conn = Untils.getConnection();
-        String sql = "update news set title = ?, context = ? where nid = ?";
+        String sql = "update news set title = ?, context = ?, coverbg = ? where nid = ?";
         PreparedStatement stmt = null;
 
         try{
@@ -127,7 +130,8 @@ public class NewDao {
 
             stmt.setString(1, news.getTitle());
             stmt.setString(2,news.getContext());
-            stmt.setInt(3, news.getNid());
+            stmt.setString(3,news.getCoverbg());
+            stmt.setInt(4, news.getNid());
             stmt.execute();
 
             return true;
@@ -165,7 +169,8 @@ public class NewDao {
                         new News(
                             rs.getInt("nid"),
                             rs.getString("title"),
-                            rs.getString("context")
+                            rs.getString("context"),
+                            rs.getString("coverbg")
                 )
                 );
             }

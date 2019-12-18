@@ -17,13 +17,14 @@
 <body>
     <p>cctv首页</p>
 
-    <%--<ul>--%>
-        <%--<li>--%>
-            <%--<a href="##" onclick="gotoDetails(6)">新闻(假数据)</a>--%>
-            <%--<span class="del" onclick="delFun(6)">删除</span>--%>
-            <%--<span class="gotoChangePageBtn" onclick="gotoChangePage(6)">修改</span>--%>
-        <%--</li>--%>
-    <%--</ul>--%>
+    <ul>
+        <li>
+            <a href="##" onclick="gotoDetails(6)">新闻(假数据)</a>
+            <span class="del" onclick="delFun(6)">删除</span>
+            <span class="gotoChangePageBtn" onclick="gotoChangePage(6)">修改</span>
+            <span><img src="${ctx}/coverbg"></span>
+        </li>
+    </ul>
 
 
     <ul id="newsboard">
@@ -149,12 +150,15 @@
                             var rs = result.data[i]
                             var title = rs.title
                             var nid = rs.nid
+                            var coverbg = rs.coverbg
+
 
                             $('#newsboard').append(
                                 "<li>" +
                                 "<a href='##' onclick='gotoDetails("+nid+")'>"+title+"</a>  " +
                                 "<span class='del' onclick='delFun("+nid+")'>删除</span>" +
-                                " <span class='gotoChangePageBtn' onclick='gotoChangePage("+nid+")'>修改</span>"+
+                                "<span class='gotoChangePageBtn' onclick='gotoChangePage("+nid+")'>修改</span>"+
+                                "<span><img src='"+coverbg+"'  style='width: 25px;height: 25px'></span>"+
                                 "</li>")
                         }
 

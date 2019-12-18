@@ -4,7 +4,7 @@ public class News {
     private int nid;
     private String title;
     private String context;
-
+    private String coverbg;
 
 
 
@@ -22,6 +22,13 @@ public class News {
     public News(int nid, String context) {
         this.nid = nid;
         this.context = context;
+
+    }
+
+    public News(String title, String context, String coverbg) {
+        this.title = title;
+        this.context = context;
+        this.coverbg = coverbg;
     }
 
     public News(String title,String context) {
@@ -29,10 +36,11 @@ public class News {
         this.context = context;
     }
 
-    public News(int nid, String title,String context) {
+    public News(int nid, String title,String context, String coverbg) {
         this.nid = nid;
         this.title = title;
         this.context = context;
+        this.coverbg = coverbg;
     }
 
 //    get and set
@@ -61,6 +69,13 @@ public class News {
         this.context = context;
     }
 
+    public String getCoverbg() {
+        return coverbg;
+    }
+
+    public void setCoverbg(String coverbg) {
+        this.coverbg = coverbg;
+    }
 
     @Override
     public String toString() {
@@ -68,6 +83,7 @@ public class News {
                 "nid=" + nid +
                 ", title='" + title + '\'' +
                 ", context='" + context + '\'' +
+                ", coverbg='" + coverbg + '\'' +
                 '}';
     }
 }

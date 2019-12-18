@@ -29,10 +29,11 @@ public class AddNewsServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String title = request.getParameter("title");
         String context = request.getParameter("context");
+        String coverbg = request.getParameter("coverbg");
 //        out.println(title);
 //        out.println(context);
 
-        News n=new News(title,context);
+        News n=new News(title,context,coverbg);
 
         boolean news = newsService.addNews(n);
 

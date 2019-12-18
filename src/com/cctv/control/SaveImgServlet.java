@@ -72,7 +72,7 @@ public class SaveImgServlet extends HttpServlet {
 
                     //12.9(设置前端发布页面push.jsp的wangEditor所需要的指定返回信息)
                     Map<String,Object> map=new HashMap<>();
-                    map.put("errno","0");
+                    map.put("status","0");
 
                     String[] data=new String[1];
                     data[0]="\\imgFile\\"+fileName;   //设置返回的文件的本地路径

@@ -33,8 +33,9 @@ public class UpdateOneNewServlet extends HttpServlet {
         int nid = Integer.parseInt(id);
         String title = request.getParameter("title");
         String context = request.getParameter("context");
+        String coverbg = request.getParameter("coverbg");
 
-        News news = new News(nid,title,context);
+        News news = new News(nid,title,context,coverbg);
 
         boolean isChange = newsService.changeOneNew(news);
 

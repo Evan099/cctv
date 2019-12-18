@@ -19,13 +19,17 @@
 欢迎您!：${user.username}<br>
 
 <div class="outbox">
-    获取的数据：<span class="title"></span>
-    标题：
+    <span class="title"></span>
 
+    <br><span>标题：</span>
     <input type="text" name="title" id="title">
 
+    <br><br><span>封面：</span>
+    <img src="" id="imgSrc" width="150px" height="150px">
 
-    <br>富文本：
+
+
+    <br><br>富文本：
     <div id="editor">
 
     </div>
@@ -60,7 +64,7 @@
         var nid = search.split("=")[1]; //获取？后面的值
         // alert(nid);
 
-        // 传入后台
+        // 从后台查询
         $.ajax({
             url:"${ctx}/ShowNewDetailsServlet",
             type:"post",
@@ -73,10 +77,12 @@
 
                     var title = result.data[0].title
                     var context = result.data[0].context
+                    var coverbg = result.data[0].coverbg
+
 
                     $('#title').val(title)
                     editor.txt.html(context);
-
+                    $('#imgSrc').attr('src',coverbg)
 
                 }else{
                     alert('查询失败')
